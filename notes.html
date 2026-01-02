@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Share Your Thoughts - BudgetBuddy</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-color: #111827;
+            --accent: #22c55e;
+            --text-main: #e5e7eb;
+            --text-muted: #9ca3af;
+            --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.45);
+            --radius-xl: 24px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 25%, #0f172a 50%, #020617 75%, #000 100%);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 24px;
+        }
+
+        .notes-container {
+            width: 100%;
+            max-width: 800px;
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.9));
+            border-radius: 28px;
+            box-shadow: var(--shadow-soft);
+            border: 1px solid rgba(148, 163, 184, 0.18);
+            padding: 40px;
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        .notes-header {
+            text-align: center;
+            margin-bottom: 32px;
+        }
+
+        .notes-header h1 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--accent), #4ade80);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .notes-header p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .notes-form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-group label {
+            font-weight: 500;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .form-group textarea,
+        .form-group input {
+            padding: 14px;
+            border-radius: 12px;
+            border: 1px solid rgba(148, 163, 184, 0.3);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+            font-family: "Poppins", system-ui, sans-serif;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+            resize: vertical;
+        }
+
+        .form-group input {
+            min-height: 44px;
+        }
+
+        .form-group textarea {
+            min-height: 200px;
+            max-height: 400px;
+        }
+
+        .form-group textarea:focus,
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 12px;
+            margin-top: 12px;
+        }
+
+        .btn-submit,
+        .btn-back {
+            flex: 1;
+            padding: 14px 20px;
+            border-radius: 12px;
+            border: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: "Poppins", system-ui, sans-serif;
+        }
+
+        .btn-submit {
+            background: radial-gradient(circle at 10% 0, #4ade80, #22c55e 45%, #16a34a);
+            color: #022c22;
+            box-shadow: 0 12px 30px rgba(34, 197, 94, 0.4);
+        }
+
+        .btn-submit:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 16px 40px rgba(34, 197, 94, 0.6);
+        }
+
+        .btn-back {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--text-main);
+            border: 1px solid rgba(148, 163, 184, 0.3);
+        }
+
+        .btn-back:hover {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(148, 163, 184, 0.5);
+        }
+
+        .saved-notes {
+            margin-top: 40px;
+            padding-top: 40px;
+            border-top: 1px solid rgba(148, 163, 184, 0.2);
+        }
+
+        .saved-notes h2 {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+            color: var(--text-main);
+        }
+
+        .notes-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .note-item {
+            background: rgba(34, 197, 94, 0.1);
+            border-left: 4px solid var(--accent);
+            padding: 14px;
+            border-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+        }
+
+        .note-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .note-title {
+            font-weight: 600;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .note-text {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            word-break: break-word;
+        }
+
+        .note-date {
+            font-size: 0.75rem;
+            color: rgba(156, 163, 175, 0.7);
+            margin-top: 4px;
+        }
+
+        .delete-note-btn {
+            background: rgba(249, 115, 115, 0.15);
+            border: none;
+            color: #fca5a5;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+            margin-left: 12px;
+        }
+
+        .delete-note-btn:hover {
+            background: rgba(249, 115, 115, 0.3);
+            color: #ffffff;
+            transform: scale(1.1);
+        }
+
+        .empty-notes {
+            text-align: center;
+            color: var(--text-muted);
+            padding: 20px;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .notes-container {
+                padding: 24px;
+            }
+
+            .notes-header h1 {
+                font-size: 1.5rem;
+            }
+
+            .form-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="notes-container">
+        <div class="notes-header">
+            <h1>💭 Share Your Thoughts</h1>
+            <p>Write notes about your expenses and spending habits</p>
+        </div>
+
+        <form id="notesForm" class="notes-form">
+            <div class="form-group">
+                <label for="noteTitle">Title</label>
+                <input type="text" id="noteTitle" placeholder="e.g., My spending analysis" required>
+            </div>
+            <div class="form-group">
+                <label for="noteContent">Your thoughts</label>
+                <textarea id="noteContent" placeholder="Share your thoughts about your expenses..." required></textarea>
+            </div>
+            <div class="form-actions">
+                <button type="submit" class="btn-submit">Save Note</button>
+                <button type="button" class="btn-back" onclick="goBack()">Back to Home</button>
+            </div>
+        </form>
+
+        <div class="saved-notes">
+            <h2>Saved Notes</h2>
+            <div id="notesList" class="notes-list">
+                <div class="empty-notes">No notes saved yet. Create your first note above!</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Load and display saved notes
+        function loadNotes() {
+            const notes = JSON.parse(localStorage.getItem('expenseNotes')) || [];
+            const notesList = document.getElementById('notesList');
+
+            if (notes.length === 0) {
+                notesList.innerHTML = '<div class="empty-notes">No notes saved yet. Create your first note above!</div>';
+                return;
+            }
+
+            notesList.innerHTML = notes.map((note, index) => `
+                <div class="note-item">
+                    <div class="note-content">
+                        <div class="note-title">${note.title}</div>
+                        <div class="note-text">${note.content}</div>
+                        <div class="note-date">${new Date(note.date).toLocaleDateString()} ${new Date(note.date).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</div>
+                    </div>
+                    <button type="button" class="delete-note-btn" onclick="deleteNote(${index})" title="Delete note">✕</button>
+                </div>
+            `).join('');
+        }
+
+        // Save new note
+        document.getElementById('notesForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const title = document.getElementById('noteTitle').value;
+            const content = document.getElementById('noteContent').value;
+            const notes = JSON.parse(localStorage.getItem('expenseNotes')) || [];
+
+            notes.unshift({
+                title: title,
+                content: content,
+                date: new Date().toISOString()
+            });
+
+            localStorage.setItem('expenseNotes', JSON.stringify(notes));
+            this.reset();
+            loadNotes();
+            document.getElementById('noteTitle').focus();
+        });
+
+        // Delete note
+        function deleteNote(index) {
+            const notes = JSON.parse(localStorage.getItem('expenseNotes')) || [];
+            notes.splice(index, 1);
+            localStorage.setItem('expenseNotes', JSON.stringify(notes));
+            loadNotes();
+        }
+
+        // Go back to home
+        function goBack() {
+            window.location.href = 'home.html';
+        }
+
+        // Load notes on page load
+        loadNotes();
+    </script>
+</body>
+</html>

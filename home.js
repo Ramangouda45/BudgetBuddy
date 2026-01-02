@@ -101,3 +101,108 @@
 
     splash.addEventListener('click', hideSplash);
 })();
+
+// Add Expense functionality
+(function initAddExpense() {
+    const addBtn = document.getElementById('addExpenseBtn');
+    const modal = document.getElementById('expenseModal');
+    const closeBtn = document.querySelector('.expense-modal-close');
+    const cancelBtn = document.querySelector('.btn-cancel');
+    const form = document.getElementById('expenseForm');
+    const recentList = document.querySelector('.recent-list');
+
+    if (!addBtn || !modal) return;
+
+    // Open modal
+    addBtn.addEventListener('click', function() {
+        modal.classList.add('show');
+        document.getElementById('expenseName').focus();
+    });
+
+    // Close modal
+    function closeModal() {
+        modal.classList.remove('show');
+        form.reset();
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    cancelBtn.addEventListener('click', closeModal);
+
+    // Close modal when clicking outside
+    modal.addEventListener('click', function(e) {
+        if (e.target === modal) {
+            closeModal();
+        }
+    });
+
+    // Handle form submission
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const name = document.getElementById('expenseName').value;
+        const category = document.getElementById('expenseCategory').value;
+        const amount = document.getElementById('expenseAmount').value;
+
+        // Create new expense item
+        const newExpense = document.createElement('div');
+        newExpense.className = 'recent-item';
+        const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+        newExpense.innerHTML = `
+            <div class="recent-left">
+                <span class="recent-title">${name}</span>
+                <span class="recent-meta">Today · ${category}</span>
+            </div>
+            <span class="recent-amount negative">- ₹ ${parseFloat(amount).toLocaleString('en-IN', { minimumFractionDigits: 0, maximumFractionDigits: 2 })}</span>
+            <button class="delete-expense-btn" type="button" title="Delete expense">✕</button>
+        `;
+
+        // Add delete functionality to the button
+        const deleteBtn = newExpense.querySelector('.delete-expense-btn');
+        deleteBtn.addEventListener('click', function() {
+            newExpense.remove();
+            updateExpenseSummary();
+        });
+
+        // Insert at the beginning of the list
+        recentList.insertBefore(newExpense, recentList.firstChild);
+
+        // Update the summary display
+        updateExpenseSummary();
+
+        // Reset summary values to 0
+        const summaryValues = document.querySelectorAll('.summary-value');
+        summaryValues.forEach(value => {
+            value.textContent = '₹ 0';
+        });
+
+        // Close modal and reset form
+        closeModal();
+    });
+
+    // Function to update expense summary
+    function updateExpenseSummary() {
+        const summaryContent = document.getElementById('expensesSummary');
+        const items = recentList.querySelectorAll('.recent-item');
+        
+        if (items.length === 0) {
+            summaryContent.innerHTML = '<p class="empty-summary">No expenses added yet. Click + to add your first expense!</p>';
+            return;
+        }
+
+        let summaryHTML = '';
+        items.forEach(item => {
+            const titleEl = item.querySelector('.recent-title');
+            const metaEl = item.querySelector('.recent-meta');
+            const amountEl = item.querySelector('.recent-amount');
+            
+            if (titleEl && metaEl && amountEl) {
+                const title = titleEl.textContent;
+                const meta = metaEl.textContent;
+                const amount = amountEl.textContent;
+                summaryHTML += `<div class="expense-summary-item"><strong>${title}</strong> (${meta}) - ${amount}</div>`;
+            }
+        });
+
+        summaryContent.innerHTML = summaryHTML;
+    }
+})();

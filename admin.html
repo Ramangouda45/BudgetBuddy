@@ -230,7 +230,102 @@
             text-decoration: underline;
         }
 
-    </style>
+        /* Admin Dashboard Styles */
+        .admin-dashboard {
+            display: none;
+            width: 100%;
+            max-width: 1000px;
+            animation: fadeInUp 0.6s ease-out;
+            position: relative;
+            z-index: 1;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+
+        .dashboard-header h1 {
+            font-size: 2rem;
+            color: #0f172a;
+            font-family: "Outfit", sans-serif;
+        }
+
+        .logout-btn {
+            padding: 10px 20px;
+            border-radius: 999px;
+            border: none;
+            background: linear-gradient(135deg, var(--danger), #f97373);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+        }
+
+        .dashboard-container {
+            background: var(--white);
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--light-border);
+        }
+
+        .dashboard-title {
+            font-size: 1.5rem;
+            color: #0f172a;
+            margin-bottom: 24px;
+            font-weight: 700;
+        }
+
+        #userList {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .user-card {
+            background: linear-gradient(135deg, var(--light-bg) 0%, var(--white) 100%);
+            border: 2px solid var(--light-border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .user-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
+        }
+
+        .user-card h3 {
+            color: #0f172a;
+            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .user-card p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .user-card strong {
+            color: #0f172a;
+            font-weight: 600;
+        }
+
     </style>
 </head>
 <body>
@@ -255,6 +350,27 @@
         <p class="bottom-text">
             <a href="login.html">← Back to User Login</a>
         </p>
+    </div>
+
+    <!-- Admin Dashboard Section -->
+    <div class="admin-container admin-dashboard" id="adminDashboard">
+        <div class="dashboard-header">
+            <div>
+                <h1>Welcome, Admin!</h1>
+                <p style="color: #64748b; margin-top: 8px;">Manage and view all registered users</p>
+            </div>
+            <div style="display: flex; gap: 12px; align-items: center;">
+                <a href="home.html" class="logout-btn" style="background: linear-gradient(135deg, var(--primary), var(--primary-light)); text-decoration: none; display: inline-block;">Home</a>
+                <button class="logout-btn" onclick="logout()">Logout</button>
+            </div>
+        </div>
+        
+        <div class="dashboard-container">
+            <h2 class="dashboard-title">📋 Registered Users</h2>
+            <div id="userList">
+                <p style="color: #64748b; text-align: center; padding: 32px;">Loading users...</p>
+            </div>
+        </div>
     </div>
 
     <script src="admin.js"></script>

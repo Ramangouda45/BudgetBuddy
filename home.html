@@ -247,16 +247,16 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+                gap: 16px;
             font-weight: 700;
-            font-size: 1.3rem;
+                font-size: 1.8rem;
             letter-spacing: -0.5px;
             color: #1e293b;
         }
 
         .logo-icon {
-            width: 40px;
-            height: 40px;
+                width: 56px;
+                height: 56px;
             border-radius: var(--radius-md);
             background: linear-gradient(135deg, var(--primary), var(--primary-light));
             display: flex;
@@ -264,8 +264,14 @@
             justify-content: center;
             color: white;
             font-weight: 700;
-            font-size: 20px;
+                font-size: 28px;
             box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+        }
+
+        /* Make logo clickable */
+        .logo,
+        .logo-icon {
+            cursor: pointer;
         }
 
         .nav-right {
@@ -1140,6 +1146,37 @@
             transform: translateY(-2px);
         }
 
+        
+
+        /* User Info Card Styles */
+        .user-info-card {
+            animation: fadeInUp 0.6s ease-out, glow 4s ease-in-out infinite;
+        }
+
+        .user-action-btn {
+            padding: 10px 14px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--light-border);
+            background: var(--white);
+            color: #0f172a;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+        }
+
+        .user-action-btn:hover {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);
+        }
+
         @media (max-width: 1024px) {
             .app-wrapper {
                 grid-template-columns: 1fr;
@@ -1242,10 +1279,14 @@
                         Add Customer
                         <span>➜</span>
                     </a>
-                    <button class="btn-ghost">
+                    <button class="btn-ghost" id="viewDemoBtn">
                         View demo
                     </button>
+                    <button class="btn-ghost" id="downloadReportBtn" style="margin-left: 8px;">
+                        📊 Download Report
+                    </button>
                 </div>
+
 
                 <div class="summary-grid">
                     <div class="summary-card">
@@ -1283,6 +1324,19 @@
                     <span>Add Customers</span>
                     <span>→</span>
                 </a>
+
+                <!-- Financial Tips Section -->
+                <div class="tips-section" style="margin-top: 24px; padding: 20px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(59, 130, 246, 0.08)); border-radius: var(--radius-md); border: 1px solid rgba(16, 185, 129, 0.2);">
+                    <h3 style="font-size: 0.95rem; font-weight: 600; margin-bottom: 12px; color: #0f172a; display: flex; align-items: center; gap: 8px;">
+                        💡 Daily Tip
+                    </h3>
+                    <p id="dailyTip" style="font-size: 0.85rem; color: #475569; line-height: 1.5; margin: 0;">
+                        Track your daily expenses to identify spending patterns and save up to 20% more each month!
+                    </p>
+                    <button id="nextTipBtn" style="margin-top: 12px; padding: 6px 12px; border-radius: 999px; background: var(--success); color: white; border: none; font-size: 0.75rem; cursor: pointer; transition: all 0.2s ease;">
+                        Next Tip →
+                    </button>
+                </div>
             </section>
 
             <p class="footer-note">
@@ -1292,6 +1346,73 @@
 
         <!-- RIGHT SIDE -->
         <div class="right-pane">
+            <!-- User Info Card (shown when logged in) -->
+            <section class="card user-info-card" id="userInfoCard" style="display: none;">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">👤 User Profile</div>
+                        <div class="card-subtitle">Account Information</div>
+                    </div>
+                    <span class="badge-soft" id="userStatusBadge">Active</span>
+                </div>
+                
+                <div style="margin-top: 20px; display: flex; flex-direction: column; gap: 16px;">
+                    <!-- User Avatar & Name -->
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 16px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.08), rgba(236, 72, 153, 0.08)); border-radius: var(--radius-md);">
+                        <div id="userAvatar" style="width: 64px; height: 64px; border-radius: 50%; background: linear-gradient(135deg, var(--primary), var(--primary-light)); display: flex; align-items: center; justify-content: center; color: white; font-size: 1.5rem; font-weight: 700; box-shadow: 0 4px 12px rgba(99, 102, 241, 0.3);">U</div>
+                        <div style="flex: 1;">
+                            <div id="userFullName" style="font-size: 1.1rem; font-weight: 700; color: #0f172a; margin-bottom: 4px;">Guest User</div>
+                            <div id="userEmail" style="font-size: 0.85rem; color: #64748b;">guest@budgetbuddy.com</div>
+                        </div>
+                    </div>
+                    
+                    <!-- User Stats Grid -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;">
+                        <div style="padding: 12px; background: var(--light-bg); border-radius: var(--radius-md); text-align: center;">
+                            <div style="font-size: 1.2rem; font-weight: 700; color: var(--primary);" id="userExpenseCount">0</div>
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">Expenses</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--light-bg); border-radius: var(--radius-md); text-align: center;">
+                            <div style="font-size: 1.2rem; font-weight: 700; color: var(--success);" id="userDaysActive">1</div>
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">Days Active</div>
+                        </div>
+                        <div style="padding: 12px; background: var(--light-bg); border-radius: var(--radius-md); text-align: center;">
+                            <div style="font-size: 1.2rem; font-weight: 700; color: var(--accent);" id="userSavings">₹0</div>
+                            <div style="font-size: 0.75rem; color: #64748b; margin-top: 4px;">Saved</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Account Details -->
+                    <div style="padding: 16px; background: var(--light-bg); border-radius: var(--radius-md);">
+                        <div style="font-size: 0.85rem; font-weight: 600; color: #0f172a; margin-bottom: 12px;">📋 Account Details</div>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                <span style="color: #64748b;">Member Since:</span>
+                                <span id="userJoinDate" style="color: #0f172a; font-weight: 600;">Jan 2026</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                <span style="color: #64748b;">Last Login:</span>
+                                <span id="userLastLogin" style="color: #0f172a; font-weight: 600;">Today</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; font-size: 0.8rem;">
+                                <span style="color: #64748b;">Account Type:</span>
+                                <span style="color: var(--primary); font-weight: 600;">Free Plan</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Quick Actions -->
+                    <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;">
+                        <button class="user-action-btn" id="editProfileBtn">
+                            ✏️ Edit Profile
+                        </button>
+                        <button class="user-action-btn" id="viewHistoryBtn">
+                            📜 View History
+                        </button>
+                    </div>
+                </div>
+            </section>
+
             <section class="card">
                 <div class="card-header">
                     <div>
@@ -1341,6 +1462,87 @@
                     <div id="expensesSummary" class="expense-summary-content">
                         <p class="empty-summary">No expenses added yet. Click + to add your first expense!</p>
                     </div>
+                </div>
+            </section>
+
+            <!-- Financial Insights Card -->
+            <section class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">💰 Financial Insights</div>
+                        <div class="card-subtitle">Smart recommendations for you</div>
+                    </div>
+                    <span class="badge-soft">AI Powered</span>
+                </div>
+                
+                <div style="display: flex; flex-direction: column; gap: 12px; margin-top: 16px;">
+                    <div style="padding: 14px; background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05)); border-left: 4px solid var(--success); border-radius: var(--radius-sm);">
+                        <div style="font-size: 0.85rem; font-weight: 600; color: #0f172a; margin-bottom: 4px;">✅ Great Job!</div>
+                        <div style="font-size: 0.8rem; color: #475569;">You're 12% under budget this week. Keep it up!</div>
+                    </div>
+                    
+                    <div style="padding: 14px; background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05)); border-left: 4px solid var(--warning); border-radius: var(--radius-sm);">
+                        <div style="font-size: 0.85rem; font-weight: 600; color: #0f172a; margin-bottom: 4px;">⚠️ Watch Out</div>
+                        <div style="font-size: 0.8rem; color: #475569;">Entertainment spending is 25% higher than usual.</div>
+                    </div>
+                    
+                    <div style="padding: 14px; background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(99, 102, 241, 0.05)); border-left: 4px solid var(--primary); border-radius: var(--radius-sm);">
+                        <div style="font-size: 0.85rem; font-weight: 600; color: #0f172a; margin-bottom: 4px;">💡 Tip</div>
+                        <div style="font-size: 0.8rem; color: #475569;">Set up automatic savings of ₹500/week to reach your goal faster.</div>
+                    </div>
+                </div>
+                
+                <button id="moreInsightsBtn" style="width: 100%; margin-top: 16px; padding: 12px; border-radius: var(--radius-md); border: 1px solid var(--light-border); background: var(--white); color: var(--primary); font-weight: 600; font-size: 0.85rem; cursor: pointer; transition: all 0.2s ease;">
+                    View Detailed Analysis →
+                </button>
+            </section>
+
+            <!-- Goals & Progress Card -->
+            <section class="card">
+                <div class="card-header">
+                    <div>
+                        <div class="card-title">🎯 Monthly Goals</div>
+                        <div class="card-subtitle">Track your progress</div>
+                    </div>
+                    <button id="addGoalBtn" class="badge-soft add-expense-btn">+</button>
+                </div>
+                
+                <div style="margin-top: 16px; display: flex; flex-direction: column; gap: 16px;">
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-size: 0.85rem; font-weight: 600; color: #0f172a;">Save ₹10,000</span>
+                            <span style="font-size: 0.8rem; color: #64748b;">70%</span>
+                        </div>
+                        <div style="width: 100%; height: 8px; background: var(--light-card); border-radius: 999px; overflow: hidden;">
+                            <div style="width: 70%; height: 100%; background: linear-gradient(90deg, var(--success), #34d399); border-radius: 999px;"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-size: 0.85rem; font-weight: 600; color: #0f172a;">Reduce Food Spending</span>
+                            <span style="font-size: 0.8rem; color: #64748b;">45%</span>
+                        </div>
+                        <div style="width: 100%; height: 8px; background: var(--light-card); border-radius: 999px; overflow: hidden;">
+                            <div style="width: 45%; height: 100%; background: linear-gradient(90deg, var(--warning), #fbbf24); border-radius: 999px;"></div>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span style="font-size: 0.85rem; font-weight: 600; color: #0f172a;">Investment Fund</span>
+                            <span style="font-size: 0.8rem; color: #64748b;">85%</span>
+                        </div>
+                        <div style="width: 100%; height: 8px; background: var(--light-card); border-radius: 999px; overflow: hidden;">
+                            <div style="width: 85%; height: 100%; background: linear-gradient(90deg, var(--primary), var(--primary-light)); border-radius: 999px;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px; padding: 16px; background: linear-gradient(135deg, rgba(236, 72, 153, 0.08), rgba(99, 102, 241, 0.08)); border-radius: var(--radius-md); text-align: center;">
+                    <div style="font-size: 0.75rem; color: #64748b; margin-bottom: 4px;">Total Savings This Month</div>
+                    <div style="font-size: 1.5rem; font-weight: 700; color: var(--primary);">₹7,000</div>
+                    <div style="font-size: 0.75rem; color: var(--success); margin-top: 4px;">+15% from last month 📈</div>
                 </div>
             </section>
         </div>

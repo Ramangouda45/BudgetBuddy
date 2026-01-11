@@ -511,6 +511,29 @@
             transform: translateY(-2px);
         }
 
+        /* Accent style for Download Report button */
+        #downloadReportBtn {
+            margin-left: 8px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            border-color: var(--primary);
+            box-shadow: 0 8px 20px rgba(99, 102, 241, 0.35);
+            font-weight: 600;
+        }
+
+        #downloadReportBtn:hover {
+            background: linear-gradient(135deg, var(--primary-light), var(--accent));
+            color: white;
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 12px 28px rgba(99, 102, 241, 0.45);
+            border-color: var(--primary-light);
+        }
+
+        #downloadReportBtn:active {
+            transform: translateY(0);
+            box-shadow: 0 6px 14px rgba(99, 102, 241, 0.3);
+        }
+
         .summary-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -1248,7 +1271,7 @@
                 <div class="nav-right">
                     <div class="nav-links">
                         <a href="login.html" class="active">Login</a>
-                        <a href="signin.html">Sign Up</a>
+                        <a href="sign_up.html">Sign Up</a>
                     </div>
                     <div class="user-menu">
                         <div class="user-chip" id="userNameDisplay" title="Guest user">

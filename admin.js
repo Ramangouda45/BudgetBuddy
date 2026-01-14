@@ -18,14 +18,29 @@ function loadUsers() {
         userListDiv.innerHTML = '<p style="text-align: center; color: var(--text-muted);">No users registered yet.</p>';
         return;
     }
-    userListDiv.innerHTML = users.map(user => `
+    userListDiv.innerHTML = users.map((user, index) => `
         <div class="user-card">
             <h3>${user.fullName}</h3>
             <p><strong>Email:</strong> ${user.email}</p>
             <p><strong>Role:</strong> ${user.role}</p>
             <p><strong>Registered:</strong> ${new Date(user.createdAt).toLocaleDateString()}</p>
+            <button class="delete-btn" onclick="deleteUser('${user.email}')">🗑️ Delete Account</button>
         </div>
     `).join('');
+}
+
+function deleteUser(email) {
+    if (!confirm(`Are you sure you want to delete the account for ${email}?\n\nThis action cannot be undone.`)) {
+        return;
+    }
+    
+    const users = JSON.parse(localStorage.getItem('users')) || [];
+    const updatedUsers = users.filter(user => user.email !== email);
+    
+    localStorage.setItem('users', JSON.stringify(updatedUsers));
+    
+    alert(`Account for ${email} has been successfully deleted.`);
+    loadUsers();
 }
 
 function logout() {

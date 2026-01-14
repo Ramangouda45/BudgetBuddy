@@ -439,6 +439,31 @@
             font-weight: 600;
         }
 
+        .delete-btn {
+            margin-top: 12px;
+            width: 100%;
+            padding: 10px 16px;
+            border-radius: var(--radius-sm);
+            border: none;
+            background: linear-gradient(135deg, var(--danger), #f87171);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+            font-size: 0.9rem;
+        }
+
+        .delete-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(239, 68, 68, 0.4);
+            background: linear-gradient(135deg, #dc2626, var(--danger));
+        }
+
+        .delete-btn:active {
+            transform: translateY(0);
+        }
+
     </style>
 </head>
 <body>

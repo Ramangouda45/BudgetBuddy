@@ -380,7 +380,22 @@
         "Use cashback and reward programs wisely. Every rupee saved counts!",
         "Compare prices before making big purchases. Research saves money!",
         "Avoid impulse buying. Wait 24 hours before purchasing non-essentials.",
-        "Track all expenses, even small ones. They add up faster than you think!"
+        "Track all expenses, even small ones. They add up faster than you think!",
+        "Small daily savings create massive wealth over time. Start today, not tomorrow!",
+        "Your future self will thank you for the financial discipline you practice today.",
+        "Budgeting isn't about limiting yourself—it's about making the things that excite you possible.",
+        "Every rupee you save is a step closer to financial freedom and peace of mind.",
+        "Don't save what is left after spending; spend what is left after saving.",
+        "Financial literacy is a superpower. Learn something new about money every week!",
+        "Invest in yourself first—education and skills have the highest returns.",
+        "A budget is telling your money where to go instead of wondering where it went.",
+        "Build assets, not liabilities. Choose purchases that grow in value over time.",
+        "Compound interest works magic when you start early. Time is your best friend!",
+        "Track your net worth monthly. What gets measured gets improved!",
+        "Living below your means today creates the freedom to live above them tomorrow.",
+        "Make your money work as hard as you do. Invest wisely and consistently.",
+        "Financial success is 20% knowledge and 80% behavior. Master your habits!",
+        "Set specific financial goals with deadlines. Dreams with plans become reality!"
     ];
 
     let currentTipIndex = 0;

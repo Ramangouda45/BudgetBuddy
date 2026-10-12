@@ -11,10 +11,14 @@
 
   <!-- Project Badges -->
   <p align="center">
-    <img src="https://img.shields.io/badge/Language-HTML5%20%7C%20CSS3%20%7C%20JavaScript-blue?style=for-the-badge" alt="Tech Stack" />
-    <img src="https://img.shields.io/badge/Platform-Web-brightgreen?style=for-the-badge" alt="Platform" />
-    <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" alt="Status" />
-  </p>
+  <img src="./logo.png" alt="Project Logo" width="120" />
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Language-HTML5%20%7C%20CSS3%20%7C%20JavaScript-blue?style=for-the-badge" alt="Tech Stack" />
+  <img src="https://img.shields.io/badge/Platform-Web-brightgreen?style=for-the-badge" alt="Platform" />
+  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" alt="Status" />
+</p>
 
 </div>
 
@@ -22,7 +26,7 @@
 
 ## 📌 Overview
 
-The **WT Customer & Billing Management System** is a client-side Web Technologies (WT) project developed to streamline administrative and financial tasks. It features dedicated modules for authentication, user dashboards, billing logs, customer profiles, and administrative administration.
+The **Financial tracking and reports & Billing Management System** is a client-side Web Technologies (WT) project developed to streamline administrative and financial tasks. It features dedicated modules for authentication, user dashboards, billing logs, customer profiles, and administrative administration.
 
 ---
 

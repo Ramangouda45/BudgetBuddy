@@ -1,26 +1,11 @@
-<div align="center">
 
-  <!-- Logo placeholder: Replace 'assets/logo.png' with your actual logo path or URL -->
-  <img src="https://raw.githubusercontent.com/tandpfun/skill-icons/main/icons/HTML.svg" alt="Project Logo" width="100" height="100" />
 
-  # WT Customer & Billing Management System
+  # Simple expense and bill management
 
   <p align="center">
     A lightweight, responsive web application for managing customer records, billing workflows, user authentication, and admin tasks.
   </p>
 
-  <!-- Project Badges -->
-  <p align="center">
-  <img src="./logo.png" alt="Project Logo" width="120" />
-</p>
-
-<p align="center">
-  <img src="https://img.shields.io/badge/Language-HTML5%20%7C%20CSS3%20%7C%20JavaScript-blue?style=for-the-badge" alt="Tech Stack" />
-  <img src="https://img.shields.io/badge/Platform-Web-brightgreen?style=for-the-badge" alt="Platform" />
-  <img src="https://img.shields.io/badge/Status-Active-success?style=for-the-badge" alt="Status" />
-</p>
-
-</div>
 
 ---
 
